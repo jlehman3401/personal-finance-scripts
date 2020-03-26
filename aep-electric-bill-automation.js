@@ -14,10 +14,10 @@ const puppeteer = require('puppeteer');
 
 	// user name
 	await page.waitFor('input[placeholder="User ID"]');
-	await page.type('input[placeholder="User ID"]', 'cincinattusc')
+	await page.type('input[placeholder="User ID"]', '__________')
 
 	// password
-	await page.type('input[placeholder="Password"]', 'Return09')
+	await page.type('input[placeholder="Password"]', '__________')
 
 	// Submit
 	await Promise.all([
