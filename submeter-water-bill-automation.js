@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 
+const username = process.argv[2];
+const password = process.argv[3];
+
 (async () => {
 
 	const browser = await puppeteer.launch({headless:false, defaultViewport: null});
@@ -10,13 +13,14 @@ const puppeteer = require('puppeteer');
 	// Selecting radio button option for Email Sign in
 	await page.click('input[value="2"]');
 
-	await page.waitFor('input[name=dstEmail]');
-
 	// input username / email address
-	await page.type('input[name=dstEmail]', '___________', {delay: 20});
+	const emailElement = 'input[name=dstEmail]';
+
+	await page.waitFor(emailElement);
+	await page.type(emailElement, username, {delay: 20});
 
 	// input password
-	await page.type('input[type=password]', '___________');
+	await page.type('input[type=password]', password);
 
 	// Log in and navigate to Account Home Page
 	await Promise.all([
@@ -25,7 +29,8 @@ const puppeteer = require('puppeteer');
 	]);
 
 	// Downloads PDF file of bill
-	await page.click('a[href="https://portal.submeter.com/tenant/_nes-mybill.php"]');
+	const billElement = 'a[href="https://portal.submeter.com/tenant/_nes-mybill.php"]';
+	await page.click(billElement);
 
 })();
 

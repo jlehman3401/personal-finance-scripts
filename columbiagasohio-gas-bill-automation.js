@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 
+const username = process.argv[2];
+const password = process.argv[3];
+
 (async () => {
 
 	const browser = await puppeteer.launch({headless:false, defaultViewport: null});
@@ -8,22 +11,24 @@ const puppeteer = require('puppeteer');
 
 
 	await Promise.all([
-      page.goto('https://www.columbiagasohio.com/'),
+      page.goto('https://www.columbiagasohio.com'),
       page.waitForNavigation({ waitUntil: 'domcontentloaded' })
 	]);
 
 	// Log in with email
-	await page.waitFor('input#username');
-	await page.type('input#username', '_____________');
+	const usernameElement = 'input#username'; 
+
+	await page.waitFor(usernameElement);
+	await page.type(usernameElement, username);
 
 	// Password
-	await page.type('input#password', '_____________');
+	await page.type('input#password', password);
 
 	await Promise.all([
 		page.click('input[type="submit"]'),
 		page.waitForNavigation({ waitUntil: 'domcontentloaded' })]);
 
-	await page.waitFor(30000);
+	await page.waitFor(8000);
 
 	await Promise.all([
 		page.click('tr.row-account.row-193446230030003'),
@@ -33,7 +38,7 @@ const puppeteer = require('puppeteer');
 	// View Current Bill and Download
 	await page.goto('https://myaccount.columbiagasohio.com/bills/latest');
 
-	await page.waitFor(30000);
+	await page.waitFor(8000);
 
 	// View more Usage Details
 	await Promise.all([
